@@ -1,13 +1,8 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { MdDelete, MdDone } from "react-icons/md";
-import { useTodoDispatch } from "../../TodoContext";
+import { Todo } from "../../models/Todos";
 
-export interface ITodoItem {
-  id?: number;
-  done: boolean;
-  text: string;
-}
 const Remove = styled.div({
   display: ["flex", "none"],
   alignItems: "center",
@@ -31,7 +26,7 @@ const TodoItemBlock = styled.div({
   },
 });
 
-const CheckCircle = styled.div<Pick<ITodoItem, "done">>(
+const CheckCircle = styled.div<Pick<Todo, "done">>(
   {
     width: "32px",
     height: "32px",
@@ -51,7 +46,7 @@ const CheckCircle = styled.div<Pick<ITodoItem, "done">>(
     },
 );
 
-const Text = styled.div<Pick<ITodoItem, "done">>(
+const Text = styled.div<Pick<Todo, "done">>(
   {
     flex: 1,
     fontSize: "21px",
@@ -60,17 +55,12 @@ const Text = styled.div<Pick<ITodoItem, "done">>(
   (props) => (props.done ? { color: "#ced4da" } : { color: "#495057" }),
 );
 
-const TodoItem: React.FC<ITodoItem> = ({ id, done, text }) => {
-  const dispatch = useTodoDispatch();
-  const onToggle = () => dispatch({ type: "TOGGLE", id });
-  const onRemove = () => dispatch({ type: "REMOVE", id });
+const TodoItem: React.FC<Todo> = ({ id, done, text }) => {
   return (
     <TodoItemBlock>
-      <CheckCircle done={done} onClick={onToggle}>
-        {done && <MdDone />}
-      </CheckCircle>
+      <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
       <Text done={done}>{text}</Text>
-      <Remove onClick={onRemove}>
+      <Remove>
         <MdDelete />
       </Remove>
     </TodoItemBlock>

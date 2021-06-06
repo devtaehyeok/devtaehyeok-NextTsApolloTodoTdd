@@ -19,3 +19,36 @@
 ### to...
 
 ![contextAPI](https://i.imgur.com/lYiiIZF.png)
+
+## 아폴로 클라이언트를 이용한 테스트 방법
+
+### unit test
+
+- 1. ReactiveVar (전역변수 테스트)
+  - 해당 객체의 Mock을 만든다.
+- 2. query / mutation test (hook test)
+  - operation을 통해 연산이 되는지를 확인한다.
+  - query는 query결과 data를 mock 하는 경우 아니면 테스트 할 필요 없음
+- 3. component test
+  - component의 관심사는 `상태`의 반영이다.
+    - There are two things we could test for in React components: `presentation` and `(optionally) behavior.`
+  - 이벤트 핸들러와 데이터를 `mock`하여 해당 핸들러가 호출되는지, 데이터가 `render`되는지 테스트 한다.
+
+### 테스트 타입
+
+- Unit Test
+
+  - 컴포넌트 자체만 테스트
+    - presentation component : render 여부와 handler 호출 여부
+    - container component :
+      - query : success / error / loading
+      - mutation : data
+    - page component : render 여부
+
+- Integration Test
+
+  - Page 단위로 UseCase 기반 `feature` 테스트
+
+- End-to-end testing
+  - 백엔드와 DB 전체 연동해서 `feature` 테스트
+    ![E2E](https://wp.apollographql.com/wp-content/uploads/2021/04/end-to-end_test.png)

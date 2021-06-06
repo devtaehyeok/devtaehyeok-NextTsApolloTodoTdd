@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
 import { MdAdd } from "react-icons/md";
-import { useTodoDispatch, useTodoNextId } from "../../TodoContext";
 
 interface ITodoCreate {
   open: boolean;
@@ -77,41 +76,20 @@ function TodoCreate() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
-  const dispatch = useTodoDispatch();
-  const nextId = useTodoNextId();
-
-  const onToggle = () => setOpen(!open);
-  const onChange = (e: React.ChangeEvent<HTMLInputElement) => setValue(e.target.value);
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 새로고침 방지
-    dispatch({
-      type: "CREATE",
-      todo: {
-        id: nextId.current,
-        text: value,
-        done: false,
-      },
-    });
-    setValue("");
-    setOpen(false);
-    nextId.current += 1;
-  };
-
   return (
     <>
       {open && (
         <InsertFormPositioner>
-          <InsertForm onSubmit={onSubmit}>
+          <InsertForm>
             <Input
               autoFocus
               placeholder="할 일을 입력 후, Enter 를 누르세요"
-              onChange={onChange}
               value={value}
             />
           </InsertForm>
         </InsertFormPositioner>
       )}
-      <CircleButton onClick={onToggle} open={open}>
+      <CircleButton open={open}>
         <MdAdd />
       </CircleButton>
     </>

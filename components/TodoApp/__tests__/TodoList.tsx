@@ -1,4 +1,5 @@
 import React from "react";
+import { todosInitialValue } from "../../../cache";
 import { cleanup, render } from "../../../test-utils";
 import TodoList from "../TodoList";
 
@@ -9,6 +10,6 @@ describe("TodoList : 이 컴포넌트는 할 일에 대한 정보가 들어있�
   afterEach(cleanup);
 
   it("renders without error", () => {
-    render(<TodoList />);
+    render(<TodoList todos={[...todosInitialValue]} />);
   });
 });

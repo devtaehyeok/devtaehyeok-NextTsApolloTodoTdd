@@ -1,12 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { useTodoContext } from ".";
-
-export interface ITodoHead {
-  today: string;
-  day: string;
-  left: number;
-}
+import { TodoHeaderInfo } from "../../models/TodoHeaderInfo";
 
 const Header = styled.h1({});
 const Day = styled.div({});
@@ -28,13 +22,12 @@ const TodoHeadBlock = styled.div({
 /**
  * 이 컴포넌트는 오늘의 날짜와 요일을 보여주고, 앞으로 해야 할 일이 몇개 남았는지 보여줍니다.
  */
-export const TodoHead: React.FC = () => {
-  const { todoHeaderInfo } = useTodoContext();
+export const TodoHead: React.FC<TodoHeaderInfo> = ({ day, left, today }) => {
   return (
     <TodoHeadBlock>
-      <Header>{todoHeaderInfo.today}</Header>
-      <Day>{todoHeaderInfo.day}</Day>
-      <TasksLeft>할 일 {todoHeaderInfo.left}개 남음</TasksLeft>
+      <Header>{today}</Header>
+      <Day>{day}</Day>
+      <TasksLeft>할 일 {left}개 남음</TasksLeft>
     </TodoHeadBlock>
   );
 };

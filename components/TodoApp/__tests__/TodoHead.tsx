@@ -1,4 +1,5 @@
 import React from "react";
+import { todoHeaderInfoInitialValue } from "../../../cache";
 import { cleanup, render } from "../../../test-utils";
 import TodoApp from "../TodoApp";
 
@@ -11,7 +12,7 @@ describe("TodoHead : 이 컴포넌트는 오늘의 날짜와 요일을 보여주
   it("renders without error", () => {
     render(
       <TodoApp>
-        <TodoApp.TodoHead />
+        <TodoApp.TodoHead {...todoHeaderInfoInitialValue} />
       </TodoApp>,
     );
   });

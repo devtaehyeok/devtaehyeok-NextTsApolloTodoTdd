@@ -1,4 +1,5 @@
 import React from "react";
+import { Todo } from "../../../models/Todos";
 import { cleanup, render } from "../../../test-utils";
 import TodoItem from "../TodoItem";
 
@@ -9,8 +10,8 @@ describe("TodoItem : 각 할 일에 대한 정보를 렌더링해주는 컴포�
 그리고, 마우스를 올리면 휴지통 아이콘이 나타나고 이를 누르면 항목이 삭제됩니다..", () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
-
+  const mockTodo: Todo = { done: true, text: "test", id: 1 };
   it("renders without error", () => {
-    render(<TodoItem text={"test"} done={true} />);
+    render(<TodoItem {...mockTodo} />);
   });
 });

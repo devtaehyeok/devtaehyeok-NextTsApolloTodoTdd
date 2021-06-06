@@ -1,31 +1,21 @@
 import React from "react";
-import { useTodoState } from "../../TodoContext";
+import { TodoHeaderInfo } from "../../models/TodoHeaderInfo";
 import TodoCreate from "./TodoCreate";
-import TodoHead, { ITodoHead } from "./TodoHead";
-import { ITodoItem } from "./TodoItem";
+import TodoHead from "./TodoHead";
 import TodoList, { ITodoList } from "./TodoList";
+
 /**
  * The parent component in charge of keeping state.
  */
-const today = new Date();
-const defaultContextValue = {
-  today: today.toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }),
-  day: today.toLocaleDateString("ko-KR", { weekday: "long" }),
-  left: 0,
-};
 
 interface ITodoContext {
-  todoHeaderInfo: ITodoHead;
-  setTodoHeaderInfo: (props: ITodoHead) => void;
+  todoHeaderInfo: TodoHeaderInfo;
+  setTodoHeaderInfo: (props: TodoHeaderInfo) => void;
 }
 const TodoContext = React.createContext<ITodoContext | undefined>(undefined);
 
 interface ITodoAppComposition {
-  TodoHead: React.FC<ITodoHead | {}>;
+  TodoHead: React.FC<TodoHeaderInfo | {}>;
   TodoList: React.FC<ITodoList>;
   TodoCreate: React.FC;
 }
@@ -42,25 +32,7 @@ export const useTodoContext = () => {
 };
 
 const TodoApp: React.FC & ITodoAppComposition = (props) => {
-  const todos = useTodoState();
-  const undoneTasks = todos.filter((todo: ITodoItem) => !todo.done);
-  const [todoHeaderInfo, setTodoHeaderInfo] = React.useState({
-    ...defaultContextValue,
-    left: undoneTasks.length,
-  });
-
-  const memoizedContextValue = React.useMemo(
-    () => ({
-      todoHeaderInfo,
-      setTodoHeaderInfo,
-    }),
-    [todoHeaderInfo, setTodoHeaderInfo],
-  );
-  return (
-    <TodoContext.Provider value={memoizedContextValue}>
-      {props.children}
-    </TodoContext.Provider>
-  );
+  return <>{props.children}</>;
 };
 
 TodoApp.TodoHead = TodoHead;
