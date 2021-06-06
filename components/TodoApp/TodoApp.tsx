@@ -1,15 +1,20 @@
-import * as dateFns from "date-fns";
 import React from "react";
+import { useTodoState } from "../../TodoContext";
 import TodoCreate from "./TodoCreate";
 import TodoHead, { ITodoHead } from "./TodoHead";
+import { ITodoItem } from "./TodoItem";
 import TodoList, { ITodoList } from "./TodoList";
 /**
  * The parent component in charge of keeping state.
  */
-
+const today = new Date();
 const defaultContextValue = {
-  today: dateFns.format(new Date(), "yyyy-MM-dd"),
-  day: dateFns.format(new Date(), "	LLL"),
+  today: today.toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }),
+  day: today.toLocaleDateString("ko-KR", { weekday: "long" }),
   left: 0,
 };
 
@@ -37,8 +42,13 @@ export const useTodoContext = () => {
 };
 
 const TodoApp: React.FC & ITodoAppComposition = (props) => {
-  const [todoHeaderInfo, setTodoHeaderInfo] =
-    React.useState(defaultContextValue);
+  const todos = useTodoState();
+  const undoneTasks = todos.filter((todo: ITodoItem) => !todo.done);
+  const [todoHeaderInfo, setTodoHeaderInfo] = React.useState({
+    ...defaultContextValue,
+    left: undoneTasks.length,
+  });
+
   const memoizedContextValue = React.useMemo(
     () => ({
       todoHeaderInfo,

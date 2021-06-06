@@ -1,14 +1,19 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
 import { MdAdd } from "react-icons/md";
+import { useTodoDispatch, useTodoNextId } from "../../TodoContext";
 
 interface ITodoCreate {
   open: boolean;
+  onToggle: () => void;
 }
 
-const CircleButton = styled.button<ITodoCreate>(
+const CircleButton = styled.button<Pick<ITodoCreate, "open">>(
   {
     background: "#38d9a9",
+    position: "absolute",
+    left: "50%",
+    bottom: "0px",
     ":hover": { background: "#63e6be;" },
     ":active": { background: "#20c997;" },
     zIndex: 5,
@@ -19,9 +24,6 @@ const CircleButton = styled.button<ITodoCreate>(
     alignItems: "center",
     justifyContent: "center",
     fontSize: "60px",
-    position: "absolute",
-    left: "50%",
-    bottom: "0px",
     transform: "translate(-50%, 50%)",
     color: "white",
     borderRadius: "50%",
@@ -71,17 +73,41 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
-const TodoCreate: React.FC = () => {
+function TodoCreate() {
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+
+  const dispatch = useTodoDispatch();
+  const nextId = useTodoNextId();
 
   const onToggle = () => setOpen(!open);
+  const onChange = (e) => setValue(e.target.value);
+  const onSubmit = (e) => {
+    e.preventDefault(); // 새로고침 방지
+    dispatch({
+      type: "CREATE",
+      todo: {
+        id: nextId.current,
+        text: value,
+        done: false,
+      },
+    });
+    setValue("");
+    setOpen(false);
+    nextId.current += 1;
+  };
 
   return (
     <>
       {open && (
         <InsertFormPositioner>
-          <InsertForm>
-            <Input autoFocus placeholder="할 일을 입력 후, Enter 를 누르세요" />
+          <InsertForm onSubmit={onSubmit}>
+            <Input
+              autoFocus
+              placeholder="할 일을 입력 후, Enter 를 누르세요"
+              onChange={onChange}
+              value={value}
+            />
           </InsertForm>
         </InsertFormPositioner>
       )}
@@ -90,6 +116,6 @@ const TodoCreate: React.FC = () => {
       </CircleButton>
     </>
   );
-};
+}
 
-export default TodoCreate;
+export default React.memo(TodoCreate);

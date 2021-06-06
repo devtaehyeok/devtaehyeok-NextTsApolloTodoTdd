@@ -1,6 +1,13 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { MdDelete, MdDone } from "react-icons/md";
+import { useTodoDispatch } from "../../TodoContext";
+
+export interface ITodoItem {
+  id?: number;
+  done: boolean;
+  text: string;
+}
 const Remove = styled.div({
   display: ["flex", "none"],
   alignItems: "center",
@@ -43,11 +50,7 @@ const CheckCircle = styled.div<Pick<ITodoItem, "done">>(
       color: "#38d9a9",
     },
 );
-interface ITodoItem {
-  id?: string;
-  done: boolean;
-  text: string;
-}
+
 const Text = styled.div<Pick<ITodoItem, "done">>(
   {
     flex: 1,
@@ -58,15 +61,20 @@ const Text = styled.div<Pick<ITodoItem, "done">>(
 );
 
 const TodoItem: React.FC<ITodoItem> = ({ id, done, text }) => {
+  const dispatch = useTodoDispatch();
+  const onToggle = () => dispatch({ type: "TOGGLE", id });
+  const onRemove = () => dispatch({ type: "REMOVE", id });
   return (
     <TodoItemBlock>
-      <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
+      <CheckCircle done={done} onClick={onToggle}>
+        {done && <MdDone />}
+      </CheckCircle>
       <Text done={done}>{text}</Text>
-      <Remove>
+      <Remove onClick={onRemove}>
         <MdDelete />
       </Remove>
     </TodoItemBlock>
   );
 };
 
-export default TodoItem;
+export default React.memo(TodoItem);

@@ -9,3 +9,13 @@
    1. [Testing Apollo Client Application](https://www.apollographql.com/blog/frontend/introduction-to-testing/)
    2. [Apollo Client & Client-side Architecture Basics](https://www.apollographql.com/blog/apollo-client/architecture/client-side-architecture-basics/)
 5. [프론트엔드에서도 TDD가 가능하다는 것을 보여드립니다.](https://github.com/CodeSoom/frontend-tdd-feconf2020/blob/todo-app/src/Item.test.jsx)
+
+## Context API
+
+### from...
+
+![props drilling](https://i.imgur.com/hX8jjXG.png)
+
+### to...
+
+![contextAPI](https://i.imgur.com/lYiiIZF.png)
