@@ -5,7 +5,7 @@ export const GET_ALL_TODOS = gql`
     todos @client {
       id
       text
-      completed
+      done
     }
   }
 `;

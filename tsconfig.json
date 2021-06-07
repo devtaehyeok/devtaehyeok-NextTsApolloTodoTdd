@@ -19,7 +19,8 @@
     "**/*.ts",
     "**/*.tsx",
     "TodoContext.js",
-    "apollo.config.js"
+    "apollo.config.js",
+    "components/TodoApp/__tests__/item.jsx"
   ],
   "exclude": ["node_modules"]
 }

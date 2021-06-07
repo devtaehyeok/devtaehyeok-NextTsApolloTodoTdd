@@ -50,5 +50,9 @@
   - Page 단위로 UseCase 기반 `feature` 테스트
 
 - End-to-end testing
+
   - 백엔드와 DB 전체 연동해서 `feature` 테스트
     ![E2E](https://wp.apollographql.com/wp-content/uploads/2021/04/end-to-end_test.png)
+
+- 아폴로 테스트 특징
+  - 클라이언트 (로컬변수)를 쓰면 cache 설정도 해줘야 함.

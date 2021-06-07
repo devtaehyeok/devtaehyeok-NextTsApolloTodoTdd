@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { MdAdd } from "react-icons/md";
 
 interface ITodoCreate {
@@ -72,10 +72,11 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
-function TodoCreate() {
+const TodoCreate: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
-
+  const toggleOpen = useCallback(() => setOpen(!open), []);
+  const handleChange = useCallback((e: any) => setValue(e.target.value), []);
   return (
     <>
       {open && (
@@ -85,15 +86,20 @@ function TodoCreate() {
               autoFocus
               placeholder="할 일을 입력 후, Enter 를 누르세요"
               value={value}
+              onChange={handleChange}
             />
           </InsertForm>
         </InsertFormPositioner>
       )}
-      <CircleButton open={open}>
+      <CircleButton
+        open={open}
+        onClick={toggleOpen}
+        data-testid="circle-button"
+      >
         <MdAdd />
       </CircleButton>
     </>
   );
-}
+};
 
 export default React.memo(TodoCreate);

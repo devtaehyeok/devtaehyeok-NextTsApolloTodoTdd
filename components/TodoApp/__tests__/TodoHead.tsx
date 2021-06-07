@@ -10,10 +10,6 @@ describe("TodoHead : 이 컴포넌트는 오늘의 날짜와 요일을 보여주
   afterEach(cleanup);
 
   it("renders without error", () => {
-    render(
-      <TodoApp>
-        <TodoApp.TodoHead {...todoHeaderInfoInitialValue} />
-      </TodoApp>,
-    );
+    render(<TodoApp.TodoHead {...todoHeaderInfoInitialValue} />);
   });
 });

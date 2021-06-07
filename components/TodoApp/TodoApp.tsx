@@ -15,7 +15,7 @@ interface ITodoContext {
 const TodoContext = React.createContext<ITodoContext | undefined>(undefined);
 
 interface ITodoAppComposition {
-  TodoHead: React.FC<TodoHeaderInfo | {}>;
+  TodoHead: React.FC<TodoHeaderInfo>;
   TodoList: React.FC<ITodoList>;
   TodoCreate: React.FC;
 }
